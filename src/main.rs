@@ -19,8 +19,6 @@ fn fibonacci(n: u128) -> u128 {
     _fib(n).0
 }
 
-
-
 fn _fib(n: u128) -> (u128, u128) {
     if n == 0 {
         (0,1)
