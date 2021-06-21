@@ -11,10 +11,17 @@ use num_bigint::{BigUint, ToBigUint};
 use num_traits::{One, Zero};
 
 fn main() {
-    let f: usize = 4096;
+    let f: usize = 8192;
 
     let now = std::time::Instant::now();
-    println!("fib {}: {} ({} microseconds)", f, fibonacci(f), now.elapsed().as_micros());
+    let fib = fibonacci(f);
+    let dur = now.elapsed().as_micros();
+    println!(
+        "fib {}: {} ({} microseconds)",
+        f,
+        fib,
+        dur
+    );
 }
 
 fn fibonacci(n: usize) -> BigUint {
