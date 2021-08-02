@@ -16,12 +16,7 @@ fn main() {
     let now = std::time::Instant::now();
     let fib = fibonacci(f);
     let dur = now.elapsed().as_micros();
-    println!(
-        "fib {}: {} ({} microseconds)",
-        f,
-        fib,
-        dur
-    );
+    println!("fib {}: {} ({} microseconds)", f, fib, dur);
 }
 
 fn fibonacci(n: usize) -> BigUint {
