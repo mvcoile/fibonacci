@@ -11,12 +11,12 @@ use num_bigint::{BigUint, ToBigUint};
 use num_traits::{One, Zero};
 
 fn main() {
-    let f: usize = 8192;
+    let f: usize = 1_000_000;
 
     let now = std::time::Instant::now();
     let fib = fibonacci(f);
-    let dur = now.elapsed().as_micros();
-    println!("fib {}: {} ({} microseconds)", f, fib, dur);
+    let dur = now.elapsed().as_micros().to_string();
+    println!("fib {}: {} ({} microseconds)", f, fib.to_string(), dur);
 }
 
 fn fibonacci(n: usize) -> BigUint {
@@ -25,16 +25,16 @@ fn fibonacci(n: usize) -> BigUint {
 
 fn _fib(n: BigUint) -> (BigUint, BigUint) {
     if n.is_zero() {
-        return (Zero::zero(), One::one());
+        (Zero::zero(), One::one())
     } else {
         let (a, b) = _fib(&n / 2.to_biguint().unwrap()); // ignoring remainder. eg. 17/7 = 2
         let c: BigUint = &a * (&b * 2.to_biguint().unwrap() - &a);
         let d: BigUint = a.pow(2) + b.pow(2);
 
         if n % 2.to_biguint().unwrap() == Zero::zero() {
-            return (c, d);
+            (c, d)
         } else {
-            return (d.clone(), c + d);
+            (d.clone(), c + d)
         }
     }
 }
