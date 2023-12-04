@@ -1,40 +1,25 @@
-/*
-In mathematics, the Fibonacci numbers, commonly denoted Fn, form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1.
-- F_{0}=0, F_{1}=1
-- F_{n}=F_{n-1}+F_{n-2}
-
-https://www.nayuki.io/page/fast-fibonacci-algorithms
-
-Fast doubling:
-*/
-use num_bigint::{BigUint, ToBigUint};
-use num_traits::{One, Zero};
+use fibonacci::*;
+use rayon::prelude::*;
+use std::iter::repeat_with;
 
 fn main() {
-    let f: usize = 1_000_000;
+    let fib_indexes: Vec<usize> = repeat_with(|| fastrand::usize(1_000_000..10_000_000))
+        .take(10)
+        .collect();
+    println!("fib_indexes: {fib_indexes:?}");
 
     let now = std::time::Instant::now();
-    let fib = fibonacci(f);
-    let dur = now.elapsed().as_micros().to_string();
-    println!("fib {}: {} ({} microseconds)", f, fib.to_string(), dur);
-}
+    fib_indexes.clone().into_par_iter().for_each(|i| {
+        let _fib = recursive_fibonacci(i);
+    });
+    let dur = now.elapsed().as_secs_f64().to_string();
+    println!("fibonacci: ({dur} seconds)");
 
-fn fibonacci(n: usize) -> BigUint {
-    _fib(n.to_biguint().unwrap()).0
-}
-
-fn _fib(n: BigUint) -> (BigUint, BigUint) {
-    if n.is_zero() {
-        (Zero::zero(), One::one())
-    } else {
-        let (a, b) = _fib(&n / 2.to_biguint().unwrap()); // ignoring remainder. eg. 17/7 = 2
-        let c: BigUint = &a * (&b * 2.to_biguint().unwrap() - &a);
-        let d: BigUint = a.pow(2) + b.pow(2);
-
-        if n % 2.to_biguint().unwrap() == Zero::zero() {
-            (c, d)
-        } else {
-            (d.clone(), c + d)
-        }
-    }
+    let now = std::time::Instant::now();
+    fib_indexes.clone().into_par_iter().for_each(|i| {
+        let _fib = fast_doubling_fibonacci(i);
+        //println!("fib {f}: {_fib} ({dur} microseconds)");
+    });
+    let dur = now.elapsed().as_secs_f64().to_string();
+    println!("fast_doubling_fibonacci: ({dur} seconds)");
 }
