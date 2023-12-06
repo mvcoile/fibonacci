@@ -38,8 +38,16 @@ fn _fib(n: BigUint) -> (BigUint, BigUint) {
 pub fn fast_doubling_fibonacci(index: usize) -> BigUint {
     let (mut a, mut b) = (BigUint::zero(), BigUint::one());
 
+    // Handle the first 2 indexes.
+    if index == 0 {
+        return a;
+    } else if index == 1 {
+        return b;
+    }
+
     // Calculate the first 1 bit in index.
     let mut bit = 2usize.pow(index.ilog2());
+
     // Walking down the bits of index. When the bit is 0, we only need to calculate a and b using the doubling method. When the bit is 1, we do an extra naive step. This is because the index is uneven
     while bit != 0 {
         (b, a) = (a.pow(2) + b.pow(2), &a * ((b << 1) - &a));
@@ -67,8 +75,8 @@ mod tests {
     }
 
     #[test]
-    fn test_fast_doubling_fibonacci_1_100() {
-        for i in 1..100 {
+    fn test_fast_doubling_fibonacci_2_100() {
+        for i in 0..100 {
             assert_eq!(fast_doubling_fibonacci(i), slow_fibonacci(i));
         }
     }
