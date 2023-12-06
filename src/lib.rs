@@ -59,8 +59,7 @@ mod tests {
 
     // Helper function to calculate Fibonacci the slow way for verification
     fn slow_fibonacci(n: usize) -> BigUint {
-        let mut a: BigUint = BigUint::one();
-        let mut b: BigUint = BigUint::one();
+        let (mut a, mut b) = (BigUint::zero(), BigUint::one());
         for _ in 0..n {
             (a, b) = (b.clone(), a + b);
         }
@@ -68,72 +67,30 @@ mod tests {
     }
 
     #[test]
-    fn test_fast_doubling_fibonacci_1() {
-        let result = fast_doubling_fibonacci(522);
-        let expected = slow_fibonacci(522);
-        assert_eq!(result, expected);
+    fn test_fast_doubling_fibonacci_1_100() {
+        for i in 1..100 {
+            assert_eq!(fast_doubling_fibonacci(i), slow_fibonacci(i));
+        }
     }
 
     #[test]
-    fn test_fast_doubling_fibonacci_2() {
-        let result = fast_doubling_fibonacci(1450);
-        let expected = slow_fibonacci(1450);
-        assert_eq!(result, expected);
+    fn test_fast_doubling_fibonacci_100_1000() {
+        for i in (100..1000).step_by(100) {
+            assert_eq!(fast_doubling_fibonacci(i), slow_fibonacci(i));
+        }
     }
 
     #[test]
-    fn test_fast_doubling_fibonacci_3() {
-        let result = fast_doubling_fibonacci(2333);
-        let expected = slow_fibonacci(2333);
-        assert_eq!(result, expected);
+    fn test_fast_doubling_fibonacci_1000_10000() {
+        for i in (1000..10000).step_by(1000) {
+            assert_eq!(fast_doubling_fibonacci(i), slow_fibonacci(i));
+        }
     }
 
     #[test]
-    fn test_fast_doubling_fibonacci_4() {
-        let result = fast_doubling_fibonacci(987);
-        let expected = slow_fibonacci(987);
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_fast_doubling_fibonacci_5() {
-        let result = fast_doubling_fibonacci(3210);
-        let expected = slow_fibonacci(3210);
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_fast_doubling_fibonacci_6() {
-        let result = fast_doubling_fibonacci(4044);
-        let expected = slow_fibonacci(4044);
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_fast_doubling_fibonacci_7() {
-        let result = fast_doubling_fibonacci(2741);
-        let expected = slow_fibonacci(2741);
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_fast_doubling_fibonacci_8() {
-        let result = fast_doubling_fibonacci(1690);
-        let expected = slow_fibonacci(1690);
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_fast_doubling_fibonacci_9() {
-        let result = fast_doubling_fibonacci(3587);
-        let expected = slow_fibonacci(3587);
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_fast_doubling_fibonacci_10() {
-        let result = fast_doubling_fibonacci(4912);
-        let expected = slow_fibonacci(4912);
-        assert_eq!(result, expected);
+    fn test_fast_doubling_fibonacci_10000_50000() {
+        for i in (10000..50000).step_by(10000) {
+            assert_eq!(fast_doubling_fibonacci(i), slow_fibonacci(i));
+        }
     }
 }
