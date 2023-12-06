@@ -42,10 +42,10 @@ pub fn fast_doubling_fibonacci(index: usize) -> BigUint {
     let mut bit = 2usize.pow(index.ilog2());
     // Walking down the bits of index. When the bit is 0, we only need to calculate a and b using the doubling method. When the bit is 1, we do an extra naive step. This is because the index is uneven
     while bit != 0 {
-        (a, b) = (&a * ((&b << 1) - &a), a.pow(2) + b.pow(2));
+        (b, a) = (a.pow(2) + b.pow(2), &a * ((b << 1) - &a));
 
         if (index & bit) != 0 {
-            (a, b) = (b.clone(), a + b);
+            (b, a) = (a + &b, b);
         }
 
         bit >>= 1;
@@ -61,7 +61,7 @@ mod tests {
     fn slow_fibonacci(n: usize) -> BigUint {
         let (mut a, mut b) = (BigUint::zero(), BigUint::one());
         for _ in 0..n {
-            (a, b) = (b.clone(), a + b);
+            (b, a) = (a + &b, b);
         }
         a
     }
