@@ -1,4 +1,4 @@
-use num_bigint::{BigUint, ToBigUint};
+use num_bigint::BigUint;
 use num_traits::{One, Zero};
 
 /*
@@ -15,26 +15,7 @@ In mathematics, the Fibonacci numbers, commonly denoted Fn, form a sequence, cal
 https://www.nayuki.io/page/fast-fibonacci-algorithms
 */
 
-pub fn recursive_fibonacci(n: usize) -> BigUint {
-    _fib(n.to_biguint().unwrap()).0
-}
-
-fn _fib(n: BigUint) -> (BigUint, BigUint) {
-    if n.is_zero() {
-        (Zero::zero(), One::one())
-    } else {
-        let (a, b) = _fib(&n / 2.to_biguint().unwrap()); // ignoring remainder. eg. 17/7 = 2
-        let c: BigUint = &a * (&b * 2.to_biguint().unwrap() - &a);
-        let d: BigUint = a.pow(2) + b.pow(2);
-
-        if n % 2.to_biguint().unwrap() == Zero::zero() {
-            (c, d)
-        } else {
-            (d.clone(), c + d)
-        }
-    }
-}
-
+/// Calculates the Fibonacci number at a specified index using the fast doubling
 pub fn fast_doubling_fibonacci(index: usize) -> BigUint {
     let (mut a, mut b) = (BigUint::zero(), BigUint::one());
 
