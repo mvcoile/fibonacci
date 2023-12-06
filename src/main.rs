@@ -1,25 +1,23 @@
+use clap::Parser;
 use fibonacci::*;
-use rayon::prelude::*;
-use std::iter::repeat_with;
+
+/// This program calculates the Fibonacci number at a specified index using the
+/// fast doubling algorithm. The `fast_doubling_fibonacci` function leverages
+/// properties of the Fibonacci sequence to efficiently compute large Fibonacci
+/// numbers with reduced time complexity compared to naive recursive methods.
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    /// The index of the Fibonacci number to calculate.
+    #[arg()]
+    index: usize,
+}
 
 fn main() {
-    let fib_indexes: Vec<usize> = repeat_with(|| fastrand::usize(1_000_000..10_000_000))
-        .take(10)
-        .collect();
-    println!("fib_indexes: {fib_indexes:?}");
-
-    let now = std::time::Instant::now();
-    fib_indexes.clone().into_par_iter().for_each(|i| {
-        let _fib = recursive_fibonacci(i);
-    });
-    let dur = now.elapsed().as_secs_f64().to_string();
-    println!("fibonacci: ({dur} seconds)");
-
-    let now = std::time::Instant::now();
-    fib_indexes.clone().into_par_iter().for_each(|i| {
-        let _fib = fast_doubling_fibonacci(i);
-        //println!("fib {f}: {_fib} ({dur} microseconds)");
-    });
-    let dur = now.elapsed().as_secs_f64().to_string();
-    println!("fast_doubling_fibonacci: ({dur} seconds)");
+    let args = Args::parse();
+    println!(
+        "fibonacci({}) = {}",
+        args.index,
+        fast_doubling_fibonacci(args.index)
+    );
 }
