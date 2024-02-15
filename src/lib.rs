@@ -17,13 +17,14 @@ https://www.nayuki.io/page/fast-fibonacci-algorithms
 
 /// Calculates the Fibonacci number at a specified index using the fast doubling
 pub fn fast_doubling_fibonacci(index: usize) -> BigUint {
+    // base values for the first 2 indexes.
     let (mut a, mut b) = (BigUint::zero(), BigUint::one());
 
     // Handle the first 2 indexes.
-    if index == 0 {
-        return a;
-    } else if index == 1 {
-        return b;
+    match index {
+        0 => return a,
+        1 => return b,
+        _ => (),
     }
 
     // Calculate the first 1 bit in index.
