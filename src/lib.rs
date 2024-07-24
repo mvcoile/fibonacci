@@ -19,21 +19,20 @@ https://www.nayuki.io/page/fast-fibonacci-algorithms
 
 /// Calculates the Fibonacci number at a specified index using the fast doubling
 pub fn fast_doubling_fibonacci(index: usize) -> Natural {
-    // base values for the first 2 indexes.
-    let (mut a, mut b) = (Natural::ZERO, Natural::ONE);
-
     // Handle the first 2 indexes.
     match index {
-        0 => return a,
-        1 => return b,
+        0 => return Natural::ZERO,
+        1 => return Natural::ONE,
         _ => (),
     }
+    let (mut a, mut b) = (Natural::ZERO, Natural::ONE);
 
     // Calculate the first 1 bit in index.
-    let mut bit = 2usize.pow(index.ilog2());
+    let mut bit = 1 << index.ilog2();
 
     // Walking down the bits of index. When the bit is 0, we only need to calculate a and b using the doubling method. When the bit is 1, we do an extra naive step.
     while bit != 0 {
+        // Doubling step: F(2k) = F(k) * (2*F(k+1) - F(k))
         let _a = a.clone();
         a = &a * ((&b << 1) - &a);
         b = _a.pow(2) + b.pow(2);
