@@ -1,6 +1,6 @@
-use malachite::num::arithmetic::traits::Pow;
+use malachite::base::num::arithmetic::traits::Pow;
 use malachite::{
-    num::basic::traits::{One, Zero},
+    base::num::basic::traits::{One, Zero},
     Natural,
 };
 /*

@@ -3,7 +3,7 @@ use fibonacci::*;
 use std::time::Duration;
 
 use malachite::{
-    num::basic::traits::{One, Zero},
+    base::num::basic::traits::{One, Zero},
     Natural,
 };
 fn slow_fibonacci(n: usize) -> Natural {
