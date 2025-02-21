@@ -1,7 +1,7 @@
 use malachite::base::num::arithmetic::traits::Pow;
 use malachite::{
-    base::num::basic::traits::{One, Zero},
     Natural,
+    base::num::basic::traits::{One, Zero},
 };
 /*
 In mathematics, the Fibonacci numbers, commonly denoted Fn, form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1.

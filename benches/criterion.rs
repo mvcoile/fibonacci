@@ -1,10 +1,10 @@
-use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
 use fibonacci::*;
 use std::time::Duration;
 
 use malachite::{
-    base::num::basic::traits::{One, Zero},
     Natural,
+    base::num::basic::traits::{One, Zero},
 };
 fn slow_fibonacci(n: usize) -> Natural {
     let (mut a, mut b) = (Natural::ZERO, Natural::ONE);
